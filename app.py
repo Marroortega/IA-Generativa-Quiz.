@@ -48,7 +48,6 @@ def main():
             else:
                 st.error(f"❌ Incorrecto. La respuesta correcta es: {q['options'][q['answer']]}")
 
-    # Guardar respuestas y puntaje cuando el usuario finaliza el examen
     if st.button("Finalizar Examen"):
         st.write(f"### Tu puntaje final es: {score}/{len(questions)}")
         if user_name:
@@ -56,6 +55,6 @@ def main():
             st.success("✅ Tus respuestas han sido guardadas.")
         else:
             st.warning("⚠️ Debes ingresar tu nombre antes de enviar el examen.")
+    
+    # Mostrar respuestas guardadas si 
 
-if __name__ == "__main__":
-    main()
