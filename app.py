@@ -1,7 +1,25 @@
 import streamlit as st
+import pandas as pd
+import os
+
+# Función para guardar las respuestas en un archivo CSV
+def save_response(name, score, total_questions):
+    file_path = "respuestas.csv"
+    new_data = pd.DataFrame([[name, score, total_questions]], columns=["Nombre", "Puntaje", "Total Preguntas"])
+    
+    if os.path.exists(file_path):
+        df = pd.read_csv(file_path)
+        df = pd.concat([df, new_data], ignore_index=True)
+    else:
+        df = new_data
+    
+    df.to_csv(file_path, index=False)
 
 def main():
     st.title("Examen IA Generativa")
+    
+    # Pedir el nombre del usuario antes de empezar el examen
+    user_name = st.text_input("Escribe tu nombre o correo antes de iniciar:")
     
     questions = [
         {"question": "¿Qué distingue a la IA generativa de la IA tradicional?",
@@ -29,9 +47,15 @@ def main():
                 score += 1
             else:
                 st.error(f"❌ Incorrecto. La respuesta correcta es: {q['options'][q['answer']]}")
-    
+
+    # Guardar respuestas y puntaje cuando el usuario finaliza el examen
     if st.button("Finalizar Examen"):
         st.write(f"### Tu puntaje final es: {score}/{len(questions)}")
+        if user_name:
+            save_response(user_name, score, len(questions))
+            st.success("✅ Tus respuestas han sido guardadas.")
+        else:
+            st.warning("⚠️ Debes ingresar tu nombre antes de enviar el examen.")
 
 if __name__ == "__main__":
     main()
