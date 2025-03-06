@@ -21,6 +21,10 @@ def main():
     # Pedir el nombre del usuario antes de empezar el examen
     user_name = st.text_input("Escribe tu nombre o correo antes de iniciar:")
     
+    if not user_name:
+        st.warning("⚠️ Debes ingresar tu nombre antes de comenzar el examen.")
+        return
+    
     questions = [
         {"question": "¿Qué distingue a la IA generativa de la IA tradicional?",
          "options": ["Clasifica y predice patrones existentes.", "Genera contenido nuevo a partir de datos de entrenamiento.", "No utiliza datos de entrenamiento.", "Es lo mismo que la IA tradicional."],
@@ -48,13 +52,5 @@ def main():
             else:
                 st.error(f"❌ Incorrecto. La respuesta correcta es: {q['options'][q['answer']]}")
 
-    if st.button("Finalizar Examen"):
-        st.write(f"### Tu puntaje final es: {score}/{len(questions)}")
-        if user_name:
-            save_response(user_name, score, len(questions))
-            st.success("✅ Tus respuestas han sido guardadas.")
-        else:
-            st.warning("⚠️ Debes ingresar tu nombre antes de enviar el examen.")
-    
-    # Mostrar respuestas guardadas si 
+    if st.but
 
